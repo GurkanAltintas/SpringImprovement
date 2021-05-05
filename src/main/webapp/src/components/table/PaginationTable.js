@@ -10,6 +10,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableHeader from "./TableHeader";
 import TableContent from "./TableContent";
+import axios from "axios";
 
 
 export default class PaginationTable extends Component {
@@ -30,7 +31,10 @@ export default class PaginationTable extends Component {
         {id:"surname", label:"Surname",minWidth:170},
         {id:"email", label:"Email",minWidth:170, align:"right"},
         {id:"tcKimlikNo", label:"TC Kimlik No",minWidth:170, align:"right"},
-        {id:"studentNumber", label:"Student Number",minWidth:170, align: "right"}
+        {id:"studentNumber", label:"Student Number",minWidth:170, align: "right"},
+        {id:"update", label:"Update Student", align: "right"},
+        {id:"delete", label:"Delete Student", align: "right"},
+        {id:"addBook", label:"Add Book", align: "right"}
     ];
 
     constructor() {
@@ -40,6 +44,11 @@ export default class PaginationTable extends Component {
             rowsPerPage: 10,
             rows:[]
         }
+    }
+
+    componentDidMount() {
+        axios.get("/students").then(response=>
+            this.setState({rows:response.data}))
     }
 
     render() {

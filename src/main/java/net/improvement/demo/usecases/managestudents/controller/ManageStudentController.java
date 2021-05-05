@@ -28,7 +28,8 @@ public class ManageStudentController {
     public StudentDTO addStudent(@Valid @RequestBody StudentDTO studentDTO) {
         Student student = (studentMapper.mapToEntity(studentDTO));
         Student addedStudent = service.addStudent(student);
-        return studentMapper.maptoDTO(addedStudent);
+
+        return studentMapper.mapToDto(addedStudent);
     }
 
     @GetMapping("/students/{studentNumber}")
@@ -36,14 +37,14 @@ public class ManageStudentController {
 
         Student student = service.getByStudentNumber(studentNumber);
 
-        return studentMapper.maptoDTO(student);
+        return studentMapper.mapToDto(student);
     }
 
     @PutMapping("/students/{studentNumber}")
     public StudentDTO update(@PathVariable String studentNumber, @Valid @RequestBody StudentDTO studentDTO) {
 
         Student student = service.update(studentNumber, studentMapper.mapToEntity(studentDTO));
-        return studentMapper.maptoDTO(student);
+        return studentMapper.mapToDto(student);
     }
 
     @DeleteMapping("/students/{studentNumber}")
