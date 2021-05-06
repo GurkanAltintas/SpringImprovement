@@ -9,6 +9,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default class FormDialog extends Component {
 
+    state={
+        inputData:{}
+    }
 
     render() {
         return (
@@ -16,13 +19,13 @@ export default class FormDialog extends Component {
                 <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Student Info</DialogTitle>
                     <DialogContent>
-                        {this.getTextField()}
+                        {this.props.textFields.map(fields => this.getTextField(fields.id, fields.label, fields.type))}
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.props.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.props.handleClose} color="primary">
+                        <Button onClick={()=>this.props.onSubmit(this.state.inputData)} color="primary">
                             Submit
                         </Button>
                     </DialogActions>
@@ -31,14 +34,25 @@ export default class FormDialog extends Component {
         );
     }
 
-    getTextField() {
+    handleInputChange=(event)=>{
+        event.persist();
+        this.setState(prevState =>{
+            let inputData={...prevState.inputData};
+            inputData[event.target.id]=event.target.value;
+            return {...prevState,inputData:inputData}
+
+        })
+
+    }
+    getTextField(id, label, type) {
         return <TextField
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            id={id}
+            label={label}
+            type={type}
             fullWidth
+            onChange={this.handleInputChange}
         />;
     }
 }

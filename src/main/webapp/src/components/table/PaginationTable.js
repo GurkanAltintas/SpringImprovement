@@ -41,15 +41,11 @@ export default class PaginationTable extends Component {
         super();
         this.state = {
             page: 0,
-            rowsPerPage: 10,
-            rows:[]
+            rowsPerPage: 10
         }
     }
 
-    componentDidMount() {
-        axios.get("/students").then(response=>
-            this.setState({rows:response.data}))
-    }
+
 
     render() {
         return (
@@ -58,7 +54,7 @@ export default class PaginationTable extends Component {
                     <Table stickyHeader aria-label="sticky table">
 
                         <TableHeader columns={this.columns}/>
-                        <TableContent rows={this.state.rows} columns={this.columns} page={this.state.page}
+                        <TableContent rows={this.props.rows} columns={this.columns} page={this.state.page}
                                       rowsPerPage={this.state.rowsPerPage}/>
                     </Table>
                 </TableContainer>
@@ -66,7 +62,7 @@ export default class PaginationTable extends Component {
                 <TablePagination
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={this.state.rows.length}
+                    count={this.props.rows.length}
                     rowsPerPage={this.state.rowsPerPage}
                     page={this.state.page}
                     onChangePage={this.handleChangePage}
